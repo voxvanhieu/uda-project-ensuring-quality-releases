@@ -179,20 +179,33 @@ Create groups of variables that you can share across multiple pipelines.
 
 Make sure your GitHub repository has **azure-pipelines.yaml** file.
 
-##### 1. Tab Pipelines -> Create Pipeline -> Where is your code? Choose Github (Yaml) -> Select Repo -> Configure your pipeline
-: Choose "Existing Azure Pipelines yaml file" > Continue > Run <br/>
-  ![img](screenshots/select-existing-yaml-file.png) <br/>
+##### 7.1. Create Pipelines
 
-  ![img](screenshots/run-pipeline.png) <br/>
+1. Tab Pipelines
+2. Click Create Pipeline
+3. Where is your code? Choose Github (Yaml)
+4. Select your Repository
+5. Login GitHub account and grant access for Azure DevOps
+6. Configure your pipeline:
+   1. Choose "Existing Azure Pipelines yaml file"
+   2. Continue
+   3. Run
 
-8.2. Apcept permission for Azure Resources Create with terraform <br/>
-  ![img](screenshots/permission-needed.png) <br/>
+![img](./imgs/10.select-existing-yaml-file.png)
 
-  ![img](screenshots/permission-permit.png) <br/>
+![img](./imgs/11.run-pipeline.png)
 
-8.3. When step deploy virtual machine(VM) if you can see error : "No resource found ...". you must Registration VM on environment Pipeline and you only need to run it once (from 8.4 to 8.6) <br/>
+##### 7.2. Apcept permission for Azure Resources Create with terraform
 
-  ![img](screenshots/devops-error-no-resource.png) <br/>
+  ![img](./imgs/12.permission-needed.png)
+
+  ![img](./imgs/13.permission-permit.png)
+
+##### 7.3. Registration VM on environment Pipeline
+
+When step deploy virtual machine(VM) if you can see error : "No resource found ...". you must Registration VM on environment Pipeline and you only need to run it once (from 8.4 to 8.6)
+
+![img](screenshots/devops-error-no-resource.png)
 
 8.4. Go to Azure pipeline -> Environments -> you can see Environments name is "TEST" -> Choose and select "Add resource" -> choose "Virtual machines" > Select "Linux" and Choose icon "Copy command ..." > Close <br>
 Something similar to </br>

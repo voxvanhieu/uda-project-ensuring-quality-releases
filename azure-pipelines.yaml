@@ -1,13 +1,19 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
 variables:
-  python.version: '3.7.6'
-  azureServiceConnectionId: 'uda-project-ensuring-quality-releases-service-connection'
-  azureStorageResourceGroup: 'hieuvv-udacity-p03-storage'
-  azureStorageAccountName: 'hieuvvstorage1999'
-  azureContainerName: 'hieuvvcontainer1999'
-  projectRoot: $(System.DefaultWorkingDirectory)
-  environmentName: 'test'
+  - group: ssh-config
+  - name: azureServiceConnectionId
+    value: 'uda-project-ensuring-quality-releases-service-connection'
+  - name: azureStorageResourceGroup
+    value: 'hieuvv-udacity-p03-storage'
+  - name: azureStorageAccountName
+    value: 'hieuvvstorage1999'
+  - name: azureContainerName
+    value: 'hieuvvcontainer1999'
+  - name: projectRoot
+    value: $(System.DefaultWorkingDirectory)
+  - name: environmentName
+    value: 'test'
 
 stages:
   - stage: Infrastructure
@@ -16,7 +22,7 @@ stages:
     - job: TerraformTasks
       displayName: Terraform
       pool:
-        vmImage: 'ubuntu-18.04'
+        vmImage: 'ubuntu-latest'
       steps:
       - task: DownloadSecureFile@1
         name: terraform
