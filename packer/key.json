@@ -1,0 +1,10 @@
+{
+    "client_id": "8e66099d-e013-4af8-b3e7-1c11e4333b1b",
+    "client_secret": "cD48Q~tje24zZ6CVvh1dJ0vtnqZDZX7TyLY5Cb_E",
+    "tenant_id": "23888ed7-fee0-481c-8d17-c013a869a4e8",
+    "subscription_id": "dace3890-d3f3-4198-9c08-1d3d7651c931",
+    "managed_image_resource_group_name": "hieuvv-uda-rg-1999",
+    "managed_image_name": "VM",
+    "tag": "VM-QA",
+    "location": "eastus"
+}
