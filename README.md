@@ -203,23 +203,57 @@ Make sure your GitHub repository has **azure-pipelines.yaml** file.
 
 ##### 7.3. Registration VM on environment Pipeline
 
-When step deploy virtual machine(VM) if you can see error : "No resource found ...". you must Registration VM on environment Pipeline and you only need to run it once (from 8.4 to 8.6)
+When step deploy virtual machine(VM) if you can see error : "No resource found ...". you must Registration VM on environment Pipeline and you only need to run it once (from 7.4 to 7.6)
 
-![img](screenshots/devops-error-no-resource.png)
+![img](./imgs/14.devops-error-no-resource.png)
 
-8.4. Go to Azure pipeline -> Environments -> you can see Environments name is "TEST" -> Choose and select "Add resource" -> choose "Virtual machines" > Select "Linux" and Choose icon "Copy command ..." > Close <br>
-Something similar to </br>
-  ![img1](screenshots/devops-add-resource.png) </br>
-  ![img2](screenshots/devops-add-resource-script.png)
+##### 7.4. Create Test environment script
 
-8.5. SSH into the VM created using the Public IP -> Enter command you just copy above step -> Run it -> Success if you see result like this 
-![img3](screenshots/devops-excute-add-resource-script.png) <br>
-  
-![img4](screenshots/excute-script-in-vm.png)
+1. In tab Pipelines > click Environments
+2. Select "VM_TEST" environment
+3. Select "Add resource"
+4. choose "Virtual machines"
+5. Select "Linux"
+6. Choose icon "Copy command ..."
+7. Close
+
+![img](./imgs/15.devops-add-resource.png)
+
+![img](./imgs/16.devops-add-resource-script.png)
+
+##### 8.5. SSH to VM and Execute commands
+
+In this step, you need to SSH to your VM and execute the commands copied from step `7.4`.
+
+You will need:
+1. `admin_username` from `terraform.tfvars`
+2. `public_ip`: VM Public IP address get from your public IP address
+3. Run this command from your terminal: `ssh admin_username@public_ip`
+
+![vm public ip](./imgs/17.vm-public-ip.png)
+
+![img](./imgs/18.excute-add-resource-script.png)
+
+![img](./imgs/19.excute-script-in-vm.png)
 
 Get at the end a result like:
 
-![img5](screenshots/devops-result-add-resource-vm.png)
+![img](./imgs/20.result-add-resource-vm.png)
 
-8.6. Back to pipeline and re-run
+##### 7.6. Back to pipeline and re-run
+
+Go back to the error Azure Pipelines step and click re-run failed task. The susscessful should be like this.
+
+![img](./imgs/21.rerun-task-deploy-vm.png)
+
+### 8. Wait the Pipeline is going to execute
+
+After a successfully pipelines, there are the following Stages:
+
+1. Azure Resources Create
+2. Build
+3. Deploy App
+4. Test
+
+![img](./imgs/22.automation-test-result.png)
 
