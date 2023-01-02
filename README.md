@@ -257,3 +257,7 @@ After a successfully pipelines, there are the following Stages:
 
 ![img](./imgs/22.automation-test-result.png)
 
+If you got 403 Forbidden when trying to the webapp website, try to change the webapp plan from F1 to B1 or any "Pay-as-you-go" plan.
+
+[App Service Plan](https://learn.microsoft.com/en-us/rest/api/appservice/app-service-plans)
+
