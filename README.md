@@ -12,7 +12,7 @@
 This project desmostrates the workflow for realease quality ensuring using Azure cloud. This will implement automated testing, performance monitoring, loggin using Azure DevOps, JMeter, Selenium, Postman and Terraform.
 
 <!-- TODO: Add intro picture -->
-![intro](./screenshots/intro.png)
+![intro](././imgs/intro.png)
 
 ## Dependencies
 | Dependency   | Link                                                                 |
@@ -259,5 +259,129 @@ After a successfully pipelines, there are the following Stages:
 
 If you got 403 Forbidden when trying to the webapp website, try to change the webapp plan from F1 to B1 or any "Pay-as-you-go" plan.
 
+The FakeRestAPI belongs to this lab runs on .NET Framework 4.6, which only runs on Windows server. So, change the `os_type = "Windows"` in the `appservice.tf` file to make sure the build run.
+
 [App Service Plan](https://learn.microsoft.com/en-us/rest/api/appservice/app-service-plans)
+[Terraform AzureRM App service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/service_plan)
+
+### Configure Logging for the VM in the Azure Portal
+
+1. Create a Log Analytics workspace. It will be created on the same RG used by terraform
+
+    ![img](./imgs/23.log-analytics-workspace.png)
+
+2. Set up email alerts in the App Service:
+ 
+ * Log into Azure portal and go to the AppService that you have created.
+ * On the left-hand side, under Monitoring, click Alerts, then New Alert Rule.
+ * Verify the resource is correct, then, click “Add a Condition” and choose Http 404
+ * Then, set the Threshold value of 1. Then click Done
+ * After that, create an action group and name it myActionGroup, short name mag.
+ * Then, add “Send Email” for the Action Name, and choose Email/SMS/Push/Voice for the action type, and enter your email. Click OK
+ * Name the alert rule Http 404 errors are greater than 1, and leave the severity at 3, then click “Create”
+  Wait ten minutes for the alert to take effect. If you then visit the URL of the app service and try to go to a non-existent page more than once it should trigger the email alert.
+
+3. Log Analytics
+  * Go to the `App service* Diagnostic Settings > + Add Diagnostic Setting`. Tick `AppServiceHTTPLogs` and Send to Log Analytics Workspace created on step above and  `Save`. 
+
+  * Go back to the `App service > App Service Logs `. Turn on `Detailed Error Messages` and `Failed Request Tracing` > `Save`. 
+  * Restart the app service.
+
+4. Set up log analytics workspace properly to get logs:
+
+  * Go to Virtual Machines and Connect the VM created on Terraform to the Workspace ( Connect). Just wait that shows `Connected`.
+
+    * Set up custom logging , in the log analytics workspace go to Advanced Settings > Data > Custom Logs > Add > Choose File. Select the file selenium.log > Next > Next. Put in the following paths as type Linux:
+
+    /var/log/selenium/selenium.log
+
+    Give it a name ( `selenium_logs_CL`) and click Done. Tick the box Apply below configuration to my linux machines.
+
+  * Go to the App Service web page and navigate on the links and also generate 404 not found, example:
+
+  * Home Page: https://udacity-thoanvtt-project03-app-appservice.azurewebsites.net
+
+  * 404 Page: http://hieuvv-udacity-p03-app-appservice.azurewebsites.net/test404
+
+  * After some minutes ( 3 to 10 minutes) , check the email configured since an alert message will be received. and also check the Log Analytics Logs , so you can get visualize the logs and analyze with more detail.
+
+  ![img](./imgs/24.azure-monitor-alert-triggered-email.png)
+
+  * The alert will also be tracking on Azure portal
+  
+  ![img](./imgs/24.azure-monitor-alert-triggered.png)
+
+
+## Monitoring And Logging Result
+
+In this step, you will configure Azure Log Analytics to consume and aggregate custom application events in order to discover root causes of operational faults, and subsequently address them.
+
+### Environment Creation & Deployment
+
+  #### The pipeline build results page
+
+  ![Pipeline-Result](./imgs/25.automation-test-result.png)
+
+  #### Terraform Init
+
+  ![Terraform](./imgs/26.terraform-init-in-pipeline.png)
+
+  #### Terraform Validate
+
+  ![Terraform](./imgs/27.terraform-validate-in-pipeline.png)
+
+  #### Terraform Plan
+
+  ![Terraform](./imgs/28.1.terraform-plan-in-pipeline.png)
+
+  ![Terraform](./imgs/28.2.terraform-plan-in-pipeline.png)
+
+  #### Terraform Apply
+
+  ![Terraform](./imgs/29.1.terraform-apply-in-pipeline.png)
+
+  ![Terraform](./imgs/29.2.terraform-apply-in-pipeline.png)
+
+### Deploy WebApp FakeRestAPI
+
+  ![DeployWebApp](./imgs/30.1.deploy-azure-web-app.png)
+
+  ![FakeRestAPI](./imgs/30.2.fakerestapi.png)
+
+### Automated Testing
+
+  #### UI Testing - Selenium
+
+  ![Selenium test](./imgs/34.selenium-logging.png)
+
+  #### Performance Testing - JMeter
+
+  ![JMeterLogOutput](./imgs/31.1.jmeter-log-output-stress-test.png)
+
+  ![JMeterLogOutput](./imgs/31.2.jmeter-log-output-endurance-test.png)
+
+  #### JMeter Stress Test
+
+  ![Stress test](./imgs/32.publish-stress-test-results.png)
+
+  #### JMeter Endurance Test
+
+  ![Endurance test](./imgs/33.publish-endurance-test-results.png)
+
+  #### Regression Tests - Postman
+
+  ![Regression test](./imgs/35.1.test-run-regression-postman.png)
+
+  ![Regression test](./imgs/35.2.junit-regression-test-summary.png)
+
+  <!-- ![Regression test](./imgs/35.3.junit-regression-test-result.png) -->
+
+  #### Validation Tests
+  ![Validation test](./imgs/36.1.test-run-validation-postman.png)
+
+  ![Validation test](./imgs/junit-validation-test-summary.png)
+
+  ![Validation test](./imgs/junit-validation-test-result.png)
+
+  #### The artifact is downloaded from the Azure DevOps and available under the /projectartifactsrequirements folder.
 
