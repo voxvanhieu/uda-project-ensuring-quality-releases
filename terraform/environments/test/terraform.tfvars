@@ -17,7 +17,7 @@ address_prefix_test  = "10.5.1.0/24"
 # VM
 name_image     = "VM"
 name_vm        = "VM-QA"
-name_size      = "Standard_B1s"
+name_size      = "Standard_B1s" # Standard_DS1_v2
 type_storage   = "Standard_LRS"
 admin_username = "admin01012023"
 admin_password = "123@123Aa"

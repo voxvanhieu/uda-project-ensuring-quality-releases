@@ -58,6 +58,7 @@ module "vm" {
   application_type = var.application_type
   resource_type    = "vm"
   resource_group   = module.resource_group.resource_group_name
+  name_size        = var.name_size
   subnet_id        = module.network.subnet_id_test
   public_ip        = module.publicip.public_ip_address_id
   admin_username   = var.admin_username
