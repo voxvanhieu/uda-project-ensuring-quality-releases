@@ -11,8 +11,9 @@
 
 This project desmostrates the workflow for realease quality ensuring using Azure cloud. This will implement automated testing, performance monitoring, loggin using Azure DevOps, JMeter, Selenium, Postman and Terraform.
 
-<!-- TODO: Add intro picture -->
+<!-- TODO: Add intro picture 
 ![intro](././imgs/intro.png)
+-->
 
 ## Dependencies
 | Dependency   | Link                                                                 |
@@ -221,7 +222,7 @@ When step deploy virtual machine(VM) if you can see error : "No resource found .
 
 ![img](./imgs/16.devops-add-resource-script.png)
 
-##### 8.5. SSH to VM and Execute commands
+##### 7.5. SSH to VM and Execute commands
 
 In this step, you need to SSH to your VM and execute the commands copied from step `7.4`.
 
@@ -291,7 +292,7 @@ The FakeRestAPI belongs to this lab runs on .NET Framework 4.6, which only runs 
 
   * Go to Virtual Machines and Connect the VM created on Terraform to the Workspace ( Connect). Just wait that shows `Connected`.
 
-    * Set up custom logging , in the log analytics workspace go to Advanced Settings > Data > Custom Logs > Add > Choose File. Select the file selenium.log > Next > Next. Put in the following paths as type Linux:
+    * Set up custom logging, in the log analytics workspace go to Advanced Settings > Data > Custom Logs > Add > Choose File. Select the file selenium.log > Next > Next. Put in the following paths as type Linux:
 
     /var/log/selenium/selenium.log
 
@@ -299,7 +300,7 @@ The FakeRestAPI belongs to this lab runs on .NET Framework 4.6, which only runs 
 
   * Go to the App Service web page and navigate on the links and also generate 404 not found, example:
 
-  * Home Page: https://udacity-thoanvtt-project03-app-appservice.azurewebsites.net
+  * Home Page: https://hieuvv-udacity-p03-app-appservice.azurewebsites.net
 
   * 404 Page: http://hieuvv-udacity-p03-app-appservice.azurewebsites.net/test404
 
@@ -368,20 +369,57 @@ In this step, you will configure Azure Log Analytics to consume and aggregate cu
 
   ![Endurance test](./imgs/33.publish-endurance-test-results.png)
 
-  #### Regression Tests - Postman
+  #### Regression Tests
 
   ![Regression test](./imgs/35.1.test-run-regression-postman.png)
 
   ![Regression test](./imgs/35.2.junit-regression-test-summary.png)
 
-  <!-- ![Regression test](./imgs/35.3.junit-regression-test-result.png) -->
+  ![Regression test](./imgs/35.3.junit-regression-test-result.png)
 
   #### Validation Tests
+
   ![Validation test](./imgs/36.1.test-run-validation-postman.png)
 
-  ![Validation test](./imgs/junit-validation-test-summary.png)
+  ![Validation test](./imgs/36.2.junit-validation-test-summary.png)
 
-  ![Validation test](./imgs/junit-validation-test-result.png)
+  ![Validation test](./imgs/36.3.junit-validation-test-result.png)
 
   #### The artifact is downloaded from the Azure DevOps and available under the /projectartifactsrequirements folder.
 
+  - [drop-fakerestapi.zip](./projectartifactsrequirements/drop-fakerestapi.zip)
+  - [drop-jmeter.zip](./projectartifactsrequirements/drop-jmeter.zip)
+  - [drop-newman-logs.zip](./projectartifactsrequirements/drop-newman-logs.zip)
+  - [drop-selenium-logs.zip](./projectartifactsrequirements/drop-selenium-logs.zip)
+  - [drop-selenium.zip](./projectartifactsrequirements/drop-selenium.zip)
+  - [Email-404-rule-trigger.pdf](./projectartifactsrequirements/Email-404-rule-trigger.pdf)
+
+### Monitoring & Observability
+
+  #### Alert Rule:
+
+  ![Alert Rule](./imgs/37.404-alert-rule.png)
+
+  ![The Triggered Alert](./imgs/38.the-alert-triggered.png)
+
+  #### Triggered Alert:
+
+  ![Triggered Email Alert](./imgs/24.azure-monitor-alert-triggered-email.png)
+
+  ![The Graphs 404 Alert](./imgs/24.azure-monitor-alert-triggered.png)
+
+  #### Logs from Azure Log Analytics
+    
+    Go to Log Analytics Workspace , to run the  following queries:
+
+    ```kusto
+    AppServiceHTTPLogs
+    | where TimeGenerated < ago(2h)
+      and ScStatus == '404'
+    ```
+
+  ![Log Analytics](./imgs/39.log-query.png)
+    
+## Clean Up
+
+* On Az DevOps Pipeline , give approval on the notification to resume with the Destroy Terraform Stage.
